@@ -73,7 +73,29 @@ func main() {
 			fmt.Println("<<Task has been created>>")
 
 		case 3:
-			fmt.Println("delete new task")
+			fmt.Println("Enter the id of the task to delete it:")
+			var id uint32
+			fmt.Scan(&id)
+
+			var indexToBeDeleted int
+
+			for index, val := range allTodo {
+				if val.Id == id {
+					indexToBeDeleted = index
+				}
+			}
+
+			if indexToBeDeleted >= 0 {
+				allTodo = append(allTodo[:indexToBeDeleted], allTodo[indexToBeDeleted+1:]...)
+
+				fmt.Println("Task is removed, below is the remaining task")
+				fmt.Println("============================================")
+
+				for _, element := range allTodo {
+					fmt.Printf("%d - %s\n", element.Id, element.Title)
+				}
+
+			}
 
 		default:
 			fmt.Println("Invalid response")
