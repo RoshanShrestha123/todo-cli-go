@@ -19,3 +19,15 @@ func ReadDataFromFile(todos *[]Task) {
 		log.Fatal("Failed to load file")
 	}
 }
+
+func SaveDataToFile(todos *[]Task) {
+	rawJson, err := json.Marshal(todos)
+	if err != nil {
+		log.Fatal("Can't create new task")
+	}
+
+	err = os.WriteFile("todo.json", rawJson, 0600)
+	if err != nil {
+		log.Fatal("Failed to write the data in file")
+	}
+}

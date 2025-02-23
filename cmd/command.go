@@ -1,27 +1,15 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
-	"os"
 	"todo-cli/data"
+	"todo-cli/utils"
 )
 
 func Add(title string, todos *[]data.Task) {
 	task := data.CreateTask(title, len(*todos))
 
 	*todos = append(*todos, *task)
-
-	rawJson, err := json.Marshal(todos)
-	if err != nil {
-		log.Fatal("Can't create new task")
-	}
-
-	err = os.WriteFile("todo.json", rawJson, 0600)
-	if err != nil {
-		log.Fatal("Failed to write the data in file")
-	}
 
 	fmt.Println("<<Task has been created>>")
 
@@ -45,7 +33,7 @@ func DeleteTask(id uint32, allTodo *[]data.Task) {
 	}
 
 	if indexToBeDeleted >= 0 {
-		*allTodo = append((*allTodo)[:indexToBeDeleted], (*allTodo)[indexToBeDeleted+1:]...)
+		*allTodo = utils.RemoveArrayElementOnIndex(indexToBeDeleted, *allTodo)
 
 		fmt.Println("Task is removed, below is the remaining task")
 		fmt.Println("============================================")
