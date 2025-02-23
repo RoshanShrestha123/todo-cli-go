@@ -24,11 +24,14 @@ func Add(title string, todos *[]data.Task) {
 
 }
 
-func ListTasks(todos *[]data.Task) {
+func ListTasks(todos *[]data.Task, status string) {
 	fmt.Println("Here is the list of all the task")
 	fmt.Println("________________________________")
 	for _, element := range *todos {
-		fmt.Printf("%d - %s - %s\n", element.Id, element.Title, element.Status)
+		if element.Status == status || status == "" {
+
+			fmt.Printf("%d - %s - %s\n", element.Id, element.Title, element.Status)
+		}
 	}
 }
 

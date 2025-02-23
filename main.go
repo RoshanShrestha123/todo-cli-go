@@ -37,7 +37,8 @@ func main() {
 
 	switch flag {
 	case "list":
-		cmd.ListTasks(&allTodo)
+
+		cmd.ListTasks(&allTodo, todo)
 
 	case "add":
 		cmd.Add(todo, &allTodo)
