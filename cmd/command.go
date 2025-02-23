@@ -1,13 +1,22 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"todo-cli/data"
 	"todo-cli/utils"
 )
 
 func Add(title string, todos *[]data.Task) {
-	task := data.CreateTask(title, len(*todos))
+
+	maxId := 0
+
+	for _, v := range *todos {
+		if v.Id > uint32(maxId) {
+			maxId = int(v.Id)
+		}
+	}
+	task := data.CreateTask(title, uint32(maxId+1))
 
 	*todos = append(*todos, *task)
 
@@ -19,7 +28,7 @@ func ListTasks(todos *[]data.Task) {
 	fmt.Println("Here is the list of all the task")
 	fmt.Println("________________________________")
 	for _, element := range *todos {
-		fmt.Printf("%d - %s\n", element.Id, element.Title)
+		fmt.Printf("%d - %s - %s\n", element.Id, element.Title, element.Status)
 	}
 }
 
@@ -43,4 +52,26 @@ func DeleteTask(id uint32, allTodo *[]data.Task) {
 		}
 
 	}
+}
+
+func UpdateTask(id uint32, value data.Task, allTodo *[]data.Task) {
+
+	var indexToBeDeleted int
+
+	for index, val := range *allTodo {
+		if val.Id == uint32(id) {
+			indexToBeDeleted = index
+		}
+	}
+	(*allTodo)[indexToBeDeleted] = value
+}
+
+func SelectTaskFromId(id uint32, allTodo *[]data.Task) (*data.Task, error) {
+
+	for _, val := range *allTodo {
+		if val.Id == uint32(id) {
+			return &val, nil
+		}
+	}
+	return nil, errors.New("No data found")
 }

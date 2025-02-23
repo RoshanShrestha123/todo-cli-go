@@ -1,12 +1,12 @@
 package data
 
 type Task struct {
-	Id          uint32 `json:"id"`
-	Title       string `json:"title"`
-	IsCompleted bool   `json:"isCompleted"`
+	Id     uint32 `json:"id"`
+	Title  string `json:"title"`
+	Status string `json:"status"`
 }
 
-func CreateTask(title string, len int) *Task {
-	return &Task{Id: uint32(len), Title: title, IsCompleted: false}
+func CreateTask(title string, id uint32) *Task {
+	return &Task{Id: id, Title: title, Status: "todo"}
 
 }
