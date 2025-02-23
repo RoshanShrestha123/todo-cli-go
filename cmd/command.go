@@ -25,7 +25,7 @@ func Add(title string, todos *[]data.Task) {
 }
 
 func ListTasks(todos *[]data.Task, status string) {
-	fmt.Println("Here is the list of all the task")
+	fmt.Println("--Tasks--")
 	fmt.Println("________________________________")
 	for _, element := range *todos {
 		if element.Status == status || status == "" {
